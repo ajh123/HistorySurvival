@@ -178,8 +178,8 @@ class About:
             constants.FONTS["sizes"]["medium"], constants.FONTS["colour"], constants.FONTS["main"],
             self.rect[0] + 5, self.rect[1] + 40)
 
-        self.project_github = WebLink("https://github.com/Ben-Ryder/Conqueror-of-Empires",
-                                      "https://github.com/Ben-Ryder/Conqueror-of-Empires",
+        self.project_github = WebLink("https://github.com/Sam-Machines/HistorySurvival",
+                                      "https://github.com/Sam-Machines/HistorySurvival",
                                       self.rect[0] + 5, self.rect[1] + 60)
 
         self.project_message = pygame_gui.Text(
@@ -192,8 +192,8 @@ class About:
             constants.FONTS["sizes"]["medium"], constants.FONTS["colour"], constants.FONTS["main"],
             self.rect[0] + 5, self.rect[1] + 110)
 
-        self.personal_site = WebLink("https://benryder.me",
-                                     "https://benryder.me",
+        self.personal_site = WebLink("https://sam-machines.github.io",
+                                     "https://sam-machines.github.io",
                                      self.rect[0] + 5, self.rect[1] + 130)
 
         self.version = pygame_gui.Text(
