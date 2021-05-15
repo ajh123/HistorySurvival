@@ -7,9 +7,9 @@ import project.data as data
 import paths
 
 
-def make(game_name, map_name,  players):
+def make(game_name, map_name,  players, is_internet):
     """ where players = [[name, colour], [name,colour]...]"""
-    game = model.Model(game_name, map_name, players)  # creates "blank" game
+    game = model.Model(game_name, map_name, players, is_internet)  # creates "blank" game
 
     # Creating 'saved' directory if it doesn't exist.
     if not os.path.exists(paths.gamePath):

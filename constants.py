@@ -16,7 +16,7 @@ except Exception:  # seems to be so dependent on system and versions, easier to 
 
 
 # configuration for pygame.display
-DISPLAY_NAME = "Conqueror of Empires"
+DISPLAY_NAME = "History Survival"
 DISPLAY_SIZE = [1000, 700]
 
 # Map Config

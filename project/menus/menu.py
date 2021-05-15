@@ -188,7 +188,7 @@ class About:
             self.rect[0] + 5, self.rect[1] + 77)
 
         self.personal_title = pygame_gui.Text(
-            "Developed by Ben Ryder",
+            "Developed by ajh123",
             constants.FONTS["sizes"]["medium"], constants.FONTS["colour"], constants.FONTS["main"],
             self.rect[0] + 5, self.rect[1] + 110)
 

@@ -15,10 +15,12 @@ import project.data as data
 
 class NewGame:
     """ allows the user to setup and start a new game """
+
     def __init__(self, display):
         self.display = display
         self.state = "new_game"
         self.game_reference = None
+        self.isInternet = False
 
         # Background Setup
         self.background = pygame_gui.Image(paths.uiMenuPath + "background.png", 0, 0)
@@ -38,6 +40,12 @@ class NewGame:
         self.play_button = pygame_gui.Button(paths.uiPath + "forwardwhite.png",
                                              paths.uiPath + "forwardwhite-hover.png",
                                              self.origin[0] + 700, self.origin[1] + 525)
+
+        # Network mode
+        self.internetButton = pygame_gui.Button(paths.uiPath + "internet/no_internet.png", paths.uiPath + "internet"
+                                                                                                          "/no_internet"
+                                                                                                          "-hover.png",
+                                                self.origin[0] + 250, self.origin[1] + 240)
 
         # Game Input Setup
         self.game_name_prompt = pygame_gui.Text(
@@ -93,7 +101,8 @@ class NewGame:
         if self.game_valid():
             # Making New Game
             self.game_reference = self.game_name_input.get_text()
-            new.make(self.game_reference, self.map_selector.get_selection(), self.player_manager.get_player_dicts())
+            new.make(self.game_reference, self.map_selector.get_selection(), self.player_manager.get_player_dicts(),
+                     self.isInternet)
         else:
             self.state = "new_game"  # cancels game launch, continue with inputting game.
 
@@ -145,6 +154,9 @@ class NewGame:
                 if self.back_button.check_clicked():
                     self.state = "menu"
 
+                elif self.internetButton.check_clicked():
+                    self.isInternet = not self.isInternet
+
                 elif self.play_button.check_clicked():
                     self.state = "game"
                     self.create_game()
@@ -170,6 +182,17 @@ class NewGame:
         self.back_button.draw(self.display)
         self.play_button.draw(self.display)
 
+        if self.isInternet:
+            self.internetButton.change_images(paths.uiPath + "internet/internet.png", paths.uiPath + "internet"
+                                                                                                     "/internet"
+                                                                                                     "-hover.png")
+        else:
+            self.internetButton.change_images(paths.uiPath + "internet/no_internet.png", paths.uiPath + "internet"
+                                                                                                        "/no_internet"
+                                                                                                        "-hover.png")
+
+        self.internetButton.draw(self.display)
+
         self.game_name_prompt.draw(self.display)
         self.game_name_input.draw(self.display)
         self.game_name_error_text.draw(self.display)
@@ -185,6 +208,7 @@ class NewGame:
 
 class PlayerManager:
     """ manages the player slots seen at bottom of new_game panel"""
+
     def __init__(self, max_amount, origin):
         self.max_amount = max_amount
         self.origin = origin
@@ -266,7 +290,8 @@ class PlayerManager:
 
 class PlayerSlot:
     """ a single slot seen in the PlayerManager """
-    def __init__(self, player_manager,  origin, colour, name=""):
+
+    def __init__(self, player_manager, origin, colour, name=""):
         self.player_manager = player_manager
         self.origin = origin
         self.colour = colour
@@ -279,10 +304,11 @@ class PlayerSlot:
                                            paths.uiMenuPath + "input-normal-focused.png",
                                            paths.uiMenuPath + "input-normal-hover-focused.png",
                                            name, constants.FONTS["sizes"]["medium"], constants.FONTS["colour"],
-                                           constants.FONTS["main"], 10, 5, True, self.origin[0]+60, self.origin[1]+10)
+                                           constants.FONTS["main"], 10, 5, True, self.origin[0] + 60,
+                                           self.origin[1] + 10)
 
         self.delete_self = pygame_gui.Button(paths.uiPath + "cross.png", paths.uiPath + "cross-hover.png",
-                                             self.origin[0]+430, self.origin[1]+8)
+                                             self.origin[0] + 430, self.origin[1] + 8)
 
     def get_dict(self):
         return {"name": self.name_entry.get_text(), "colour": self.colour}
@@ -308,12 +334,14 @@ class PlayerSlot:
     def draw(self, display):
         self.back_panel.draw(display)
         self.name_entry.draw(display)
-        pygame.draw.ellipse(display, constants.COLOURS[self.colour], [self.origin[0]+330, self.origin[1]+10, 28, 28])
+        pygame.draw.ellipse(display, constants.COLOURS[self.colour],
+                            [self.origin[0] + 330, self.origin[1] + 10, 28, 28])
         self.delete_self.draw(display)
 
 
 class ColourPicker:
     """ assigns a random colour when needed, used to manage player colour generation"""
+
     def __init__(self):
         self.colours = ["blue", "yellow", "green", "red"]
 
@@ -328,6 +356,7 @@ class ColourPicker:
 
 class MapSelector:
     """ manages map choice select """
+
     def __init__(self, x, y):
         self.x = x
         self.y = y
@@ -379,7 +408,7 @@ class MapSelector:
     def update(self):
         self.map_text.change_text(self.maps[self.map_number])
         # Centering new text
-        padding = round((170 - self.map_text.get_rect()[2])/2)  # equal space on left and right of text
+        padding = round((170 - self.map_text.get_rect()[2]) / 2)  # equal space on left and right of text
         self.map_text.x = self.x + 30 + padding
 
     def draw(self, display):
@@ -390,6 +419,7 @@ class MapSelector:
 
 class SlotButton(pygame_gui.Button):
     """ Specific to PlayerManager, button must change position depending on number of slots """
+
     def change_position(self, position):
         self.rect.topleft = position
         self.rest_image.rect.topleft = position

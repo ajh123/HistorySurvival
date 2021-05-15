@@ -77,4 +77,3 @@ class ApplicationController:
     def quit(self):
         pygame.quit()
         quit()
-        

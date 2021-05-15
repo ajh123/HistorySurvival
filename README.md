@@ -12,6 +12,10 @@ To download executables see [releases](https://github.com/https://github.com/Sam
 #### From Source:  
 Run the `main.py` file from the repository root.
 
+## Starting a server
+#### From Source:  
+Run the `serverMain.py` file from the repository root.
+and ensure the port is forwarded on your firewall / router
 
 ## Dependencies
 _(For source)_

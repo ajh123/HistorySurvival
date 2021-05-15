@@ -13,6 +13,10 @@ class Button:
         self.rect.y = y
         self.function = None
 
+    def change_images(self, rest_image, hover_image):
+        self.rest_image = pygame_gui.Image(rest_image, self.rect.x, self.rect.y)
+        self.hover_image = pygame_gui.Image(hover_image, self.rect.x, self.rect.y)
+
     def set_function(self, function):
         self.function = function
 

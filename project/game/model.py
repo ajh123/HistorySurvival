@@ -9,15 +9,16 @@ import project.game.calculations as calculations
 
 class Model:
     """ holds all the data and interface to manipulate the game """
-    def __init__(self, game_name, map_name, players):  # only when creating new game
+    def __init__(self, game_name, map_name, players, is_internet=False):  # only when creating new game
         self.game_name = game_name
         self.map_name = map_name
         self.game_end = False
+        self.is_internet = is_internet
 
         self.players = [Player(p["name"], p["colour"]) for p in players]
         self.current_player = self.players[0]
 
-        self.world = World(self.map_name, self.players)  # assigns settlements to players
+        self.world = World(self.map_name, self.players, self.is_internet)  # assigns settlements to players
 
         self.current_player.start_turn()
 
@@ -373,7 +374,7 @@ def get_world(map_name):
 
 class World:
     """ holds all the map tiles, be that a Tile or City, in a 2d-array """
-    def __init__(self, map_name, players):  # __init__ creates new world
+    def __init__(self, map_name, players, is_internet):  # __init__ creates new world
         self.format = get_world(map_name)
 
         self.city_names = CityPicker()

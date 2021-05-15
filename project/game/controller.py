@@ -17,6 +17,7 @@ class Controller:
 
         # General Game Setup
         self.game_model = data.load(paths.gamePath + self.game_reference)
+        print(self.game_model.__dict__)
 
         # View + GUI Setup
         self.GUI = gui.GameGui(self, self.display, self.game_model)
